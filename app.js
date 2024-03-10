@@ -56,6 +56,7 @@ app.post('/interactions', async function (req, res) {
     // "bonbot" command
     if (name === 'bonbot') {
       const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}`
+      console.log(req.body.data);
       const rantPick = req.body.data.options ? req.body.data.options[0].value : randomRant();
       const rant = rants[rantPick];
 
@@ -65,12 +66,14 @@ app.post('/interactions', async function (req, res) {
       });
 
       for (const quote of rant.slice(1)) {
-        await DiscordRequest(endpoint, {
-          method: 'POST',
-          body: {
-            content: quote
-          },
-        });
+        await new Promise((res) => setTimeout(res, 2000)).then(() =>
+          DiscordRequest(endpoint, {
+            method: 'POST',
+            body: {
+              content: quote
+            },
+          })
+        );
       }
     }
 
