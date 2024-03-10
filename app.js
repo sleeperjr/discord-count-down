@@ -59,7 +59,12 @@ app.post('/interactions', async function (req, res) {
       const rantPick = req.body.data.options ? req.body.data.options[0].value : randomRant();
       const rant = rants[rantPick];
 
-      for (const quote of rant) {
+      await res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { content: rant[0]},
+      });
+
+      for (const quote of rant.slice(1)) {
         await DiscordRequest(endpoint, {
           method: 'POST',
           body: {
