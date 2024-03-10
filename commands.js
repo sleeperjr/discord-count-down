@@ -30,7 +30,7 @@ const RANT_COMMAND = {
   options: [
     {
       type: 3,
-      name: 'object',
+      name: 'topic',
       description: 'Pick your topic',
       required: false,
       choices: createRantChoices(),
