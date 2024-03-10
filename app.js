@@ -55,18 +55,17 @@ app.post('/interactions', async function (req, res) {
     }
     // "bonbot" command
     if (name === 'bonbot') {
+      const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}`
       const rantPick = req.body.data.options ? req.body.data.options[0].value : randomRant();
       const rant = rants[rantPick];
 
-      try {
-        const rantPosts = rant.map((quote, index) => new Promise((r, e) => setTimeout(() => res.send({
-            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: { content: quote },
-          }).then(r).catch(e), 500 * index))
-        );
-        return Promise.all(rantPosts);
-      } catch (err) {
-        console.error('Error sending message:', err);
+      for (const quote of rant) {
+        await DiscordRequest(endpoint, {
+          method: 'POST',
+          body: {
+            content: quote
+          },
+        });
       }
     }
 
