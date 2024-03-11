@@ -71,8 +71,9 @@ app.post('/interactions', async function (req, res) {
             body: {
               content: quote
             },
-          }).then((res) => {
-            const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/${req.body.id}`;
+          }).then((r) => {
+            console.log('OKAY', r)
+            const endpoint = `webhooks/${process.env.APP_ID}/${r.body.token}/messages/${r.body.id}`;
             setTimeout( () => DiscordRequest(endpoint, { method: 'DELETE' }), 10000);
           })
         );
