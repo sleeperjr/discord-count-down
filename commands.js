@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { rantOptions } from './rants.js';
 import { capitalize, InstallGlobalCommands } from './utils.js';
 
-// Get the quote subjects choices from game.js
+// Get the quote subjects choices from rants.js
 function createRantChoices() {
   const choices = rantOptions;
   const commandChoices = [];

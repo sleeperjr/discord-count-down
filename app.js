@@ -8,7 +8,6 @@ import {
   ButtonStyleTypes,
 } from 'discord-interactions';
 import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
-import { getShuffledOptions, getResult } from './game.js';
 import { randomRant, rants } from './rants.js';
 
 // Create an express app
@@ -72,9 +71,13 @@ app.post('/interactions', async function (req, res) {
             body: {
               content: quote
             },
+          }).then((res) => {
+            const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/${req.body.id}`;
+            setTimeout( () => DiscordRequest(endpoint, { method: 'DELETE' }), 10000);
           })
         );
       }
+      setTimeout( () => DiscordRequest(`webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`, { method: 'DELETE' }), 30000);
     }
   }
 });
