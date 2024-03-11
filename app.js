@@ -65,7 +65,7 @@ app.post('/interactions', async function (req, res) {
       });
 
       for (const quote of rant.slice(1)) {
-        await new Promise((res) => setTimeout(res, 2000)).then(() =>
+        await new Promise((res) => setTimeout(res, 5000)).then(() =>
           DiscordRequest(endpoint, {
             method: 'POST',
             body: {
@@ -74,11 +74,11 @@ app.post('/interactions', async function (req, res) {
           }).then((r) => r.json()).then((r) => {
             console.log('OKAY', r)
             const endpoint = `webhooks/${process.env.APP_ID}/${req.body.token}/messages/${r.id}`;
-            setTimeout( () => DiscordRequest(endpoint, { method: 'DELETE' }), 10000);
+            setTimeout( () => DiscordRequest(endpoint, { method: 'DELETE' }), 25000);
           })
         );
       }
-      setTimeout( () => DiscordRequest(`webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`, { method: 'DELETE' }), 30000);
+      setTimeout( () => DiscordRequest(`webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`, { method: 'DELETE' }), 5000);
     }
   }
 });
