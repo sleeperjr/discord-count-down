@@ -78,7 +78,7 @@ app.post('/interactions', async function (req, res) {
           })
         );
       }
-      setTimeout( () => DiscordRequest(`webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`, { method: 'DELETE' }), 5000);
+      setTimeout( () => DiscordRequest(`webhooks/${process.env.APP_ID}/${req.body.token}/messages/@original`, { method: 'DELETE' }), 35000);
     }
   }
 });
